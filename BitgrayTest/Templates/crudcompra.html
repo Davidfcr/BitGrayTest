@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<section>
+	<h1>Compra</h1>
+	<p><a href="{% url 'crudcompracreate' %}">Insertar nueva compra</a></p>
+	<ul>
+	{% for item in lista %}
+		<li>{{ item.id }} :
+			<ul>
+				<li>{{ item.id_cliente }}</li>
+				<li>{{ item.id_producto }}</li>
+				<li>{{ item.id_sede }}</li>
+				<li>{{ item.precio }}</li>
+				<li>{{ item.descripcion }}</li>
+				<li>{{ item.fecha }}</li>		
+			</ul>
+		</li>
+		<li><a href="{% url 'crudcompraupdate' item.id %}">Modificar</a></li>
+		<li><a href="{% url 'crudcompradelete' item.id %}">Borrar</a></li>
+		<br/><br/>
+	{% endfor %}
+	</ul>
+</section>
+</body>
+</html>

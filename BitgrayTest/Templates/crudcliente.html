@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<section>
+	<h1>Cliente</h1>
+	<p><a href="{% url 'crudclientecreate' %}">Insertar nuevo cliente</a></p>
+	<ul>
+	{% for item in lista %}
+		<li>{{ item.id }} :
+			<ul>
+				<li>{{ item.documento }}</li>
+				<li>{{ item.nombres }}</li>
+				<li>{{ item.detalles }}</li>
+			</ul>
+		</li>
+		<li><a href="{% url 'crudclienteupdate' item.id %}">Modificar</a></li>
+		<li><a href="{% url 'crudclientedelete' item.id %}">Borrar</a></li>
+		<br/><br/>
+	{% endfor %}
+	</ul>
+</section>
+</body>
+</html>

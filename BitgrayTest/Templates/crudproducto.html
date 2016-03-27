@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<section>
+	<h1>Producto</h1>
+	<p><a href="{% url 'crudproductocreate' %}">Insertar nuevo producto</a></p>
+	<ul>
+	{% for item in lista %}
+		<li>{{ item.id }} :
+			<ul>
+				<li>{{ item.producto }}</li>
+				<li>{{ item.precio }}</li>
+				<li>{{ item.descripcion }}</li>		
+			</ul>
+		</li>
+		<li><a href="{% url 'crudproductoupdate' item.id %}">Modificar</a></li>
+		<li><a href="{% url 'crudproductodelete' item.id %}">Borrar</a></li>
+		<br/><br/>
+	{% endfor %}
+	</ul>
+</section>
+</body>
+</html>

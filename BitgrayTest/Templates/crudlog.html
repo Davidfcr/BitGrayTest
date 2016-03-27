@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<section>
+	<h1>Log</h1>
+	<p><a href="{% url 'crudlogcreate' %}">Insertar nuevo log</a></p>
+	<ul>
+	{% for item in lista %}
+		<li>{{ item.id }} :
+			<ul>
+				<li>{{ item.fecha }}</li>
+				<li>{{ item.descripcion }}</li>
+			</ul>
+		</li>
+		<li><a href="{% url 'crudlogupdate' item.id %}">Modificar</a></li>
+		<li><a href="{% url 'crudlogdelete' item.id %}">Borrar</a></li>
+		<br/><br/>
+	{% endfor %}
+	</ul>
+</section>
+</body>
+</html>

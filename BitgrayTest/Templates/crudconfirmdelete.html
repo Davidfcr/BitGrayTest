@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bitgray Test</title>
+</head>
+<body>
+	<form method="post">{% csrf_token %}
+		Seguro que desea eliminar el elemento "{{ object }}" ?
+	<input type="submit" value="Submit" />
+</form>
+</body>
+</html>

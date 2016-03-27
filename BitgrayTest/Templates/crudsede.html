@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<section>
+	<h1>Sede</h1>
+	<p><a href="{% url 'crudsedecreate' %}">Insertar nueva sede</a></p>
+	<ul>
+	{% for item in lista %}
+		<li>{{ item.id }} :
+			<ul>
+				<li>{{ item.sede }}</li>
+				<li>{{ item.direccion }}</li>
+			</ul>
+		</li>
+		<li><a href="{% url 'crudsedeupdate' item.id %}">Modificar</a></li>
+		<li><a href="{% url 'crudsededelete' item.id %}">Borrar</a></li>
+		<br/><br/>
+	{% endfor %}
+	</ul>
+</section>
+</body>
+</html>
