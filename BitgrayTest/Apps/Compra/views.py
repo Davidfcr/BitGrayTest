@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.forms import ModelForm
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 from .models import compras
 
@@ -33,27 +34,38 @@ def compra_delete(request, pk):
 		return redirect('/crudmenu/compras/')
 	return render(request, 'crudconfirmdelete.html', {'object':row})
 
+
 class compra_interfaz(forms.ModelForm):
 	"""Formulario para la interfaz de compra punto 4"""
-	id_cliente = forms.CharField(widget=forms.TextInput(), label='Cliente', 
-		required=True)
-	id_producto = forms.CharField(widget=forms.TextInput(), label='Producto', 
-		required=True)
-	id_sede = forms.CharField(widget=forms.TextInput(), label='Cliente', 
-		required=True)
-	precio = forms.CharField(widget=forms.TextInput(), label='Cliente', 
-		required=True)
-	descripcion = forms.CharField(widget=forms.TextInput(), label='Cliente', 
-		required=True)
-	fecha = forms.CharField(widget=forms.TextInput(), label='Cliente', 
-		required=True)
+	def __init__(self, *args, **kwargs):
+		super(compra_interfaz, self).__init__(*args, **kwargs)
+		self.fields['id_cliente'].widget.attrs = {
+			'required' : True
+		}
+		self.fields['id_producto'].widget.attrs = {
+			'required' : True
+		}
+		self.fields['precio'].widget.attrs = {
+			'required' : True
+		}
+		self.fields['fecha'].widget.attrs = {
+			'required' : True
+		}
 
 	class Meta:
 		model = compras
-		fields = ['id_cliente', 'id_producto', 'id_sede', 'precio', 'descripcion', 'fecha']
-
+		fields = ('id_cliente', 'id_producto', 'id_sede', 'precio', 'descripcion', 'fecha')
+		labels = {
+            'id_cliente': _('Cliente'),
+            'id_producto': _('Producto'),
+            'id_sede': _('Sede'),
+            'precio': _('Precio'),
+            'descripcion': _('Descripcion'),
+            'fecha': _('Fecha'),
+        }
+        
 def compras_interfaz(request):
-	form = compra_form(request.POST or None)
+	form = compra_interfaz(request.POST or None)
 	if form.is_valid():
 		form.save()
 		return redirect('/crudmenu/compras/')

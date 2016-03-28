@@ -15,4 +15,5 @@ class compras(models.Model):
 		db_table = 'compras'
 
 	def __unicode__(self):
-		return self.id
+		return unicode(self.id_cliente) or u''
+	
