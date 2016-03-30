@@ -1,18 +1,38 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>BitGray Test</title>
+	<meta http-equiv="Content-Type'" content="text/html; charset=utf-8"/>
+	<meta content="utf-8" http-equiv="encoding">
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 </head>
 <body>
 	<form method="post">{% csrf_token %}
 		{{ form.as_p }}
 	<input type="submit" value="Submit" />
 	</form>
+
 <script type="text/javascript">
-	function obtenerValor() {
-    	var producto = document.getElementById("productoint").value;
-    	document.getElementById("id_precio").value = producto.split("-")[1];
-	};
-</script>
+	$(document).ready(function() {
+	    $('#productoint').change(function(){
+	    	var query = $(this).val();
+	        if (query != ""){
+	        	$.ajax({
+		            url : "/precioproducto/" + query,
+		            type : "GET",
+		            success: function(data) {
+		                document.getElementById('id_precio').value=data.precio;
+		            },
+		            failure: function(data) { 
+		                alert('error al actualizar el precio con el producto');
+		            }
+	        	});
+	        }else{
+	        	document.getElementById('id_precio').value=0;
+	        }
+	    });
+	});
+</script>	  	
 </body>
 </html>

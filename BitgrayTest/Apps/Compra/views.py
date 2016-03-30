@@ -75,26 +75,25 @@ class compra_interfaz_form(forms.Form):
 class compra_interfaz(ModelForm):
 	"""Formulario para la interfaz de compra punto 4"""
 	def __init__(self, *args, **kwargs):
-		OPT_PRODUCTOS = [('{0}-{1}'.format(opt.id, opt.precio), opt.producto) for opt in productos.objects.all()]
 		initial = kwargs.get('initial', {})
-		initial['precio'] = productos.objects.first().precio
+		initial['precio'] = 0
 		kwargs['initial'] = initial
 
 		super(compra_interfaz, self).__init__(*args, **kwargs)
 		self.fields['id_cliente'].widget.attrs = {
 			'required' : True
 		}
-		self.fields['id_producto'] = forms.ChoiceField(choices=OPT_PRODUCTOS)
+
 		self.fields['id_producto'].widget.attrs = {
 			'id' : 'productoint',
 			'required' : True,
-			'onchange' : 'obtenerValor()',
 		}
 
 		self.fields['precio'].widget.attrs = {
 			'required' : True,
-			'initial' : '0',
 		}
+
+		self.fields['fecha'].widget = forms.SelectDateWidget()
 		self.fields['fecha'].widget.attrs = {
 			'required' : True
 		}
@@ -113,15 +112,19 @@ class compra_interfaz(ModelForm):
         
 def compras_interfaz(request):
 	"""Funcion para formulario de interfaz comrpas punto 4"""
+	form = compra_interfaz(request.POST or None)
 	if request.method == 'POST':
-		form = compra_interfaz_form(request.POST)
-		optid, optprecio = form.cleaned_data['productoint'].split("-")
-		form.cleaned_data['id_producto'] = optid
-		form.cleaned_data['precio'] = optprecio
 		if form.is_valid():
 			form.save()
 			return redirect('/crudmenu/compras/')
-	else:
-		form = compra_interfaz_form()
 	return render(request, 'crudform.html', {'form':form})
+
+def precioproducto(request, key):
+	if request.method == 'GET':
+		precio_producto = productos.objects.get(id=key).precio
+		print precio_producto
+		response_data ={}
+		response_data['precio'] = precio_producto
+
+	return JsonResponse(response_data)
 

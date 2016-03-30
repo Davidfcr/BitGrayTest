@@ -17,6 +17,7 @@ from Compra.views import compra_create
 from Compra.views import compra_update
 from Compra.views import compra_delete
 from Compra.views import compras_interfaz
+from Compra.views import precioproducto
 from Log.views import log_create
 from Log.views import log_update
 from Log.views import log_delete
@@ -44,5 +45,6 @@ urlpatterns = [
     url(r'^crudlogdelete/(?P<pk>\d+)/$', log_delete, name='crudlogdelete'),
     # Interfaz compras punto 4
     url(r'^compras/$', compras_interfaz, name='comprasinterfaz'),
+    url(r'^precioproducto/(?P<key>\d+)/$', precioproducto, name='precioproducto'),
 
 ]
