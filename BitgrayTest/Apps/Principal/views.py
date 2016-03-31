@@ -15,19 +15,30 @@ def crudmenu_view(request):
 def crudselect_view(request, nombretabla=None):
 	tabla = None
 	if nombretabla is not None:
-		if nombretabla == 'clientes':
-			tabla = clientes.objects.all()
-			template = 'crudcliente.html'
-		elif nombretabla == 'productos':
-			tabla = productos.objects.all()
-			template = 'crudproducto.html'
-		elif nombretabla == 'sedes':
-			tabla = sedes.objects.all()
-			template = 'crudsede.html'
-		elif nombretabla == 'compras':
-			tabla = compras.objects.all()
-			template = 'crudcompra.html'			
-		elif nombretabla == 'log':
-			tabla = log.objects.all()
-			template = 'crudlog.html'
+		try:
+			if nombretabla == 'clientes':
+				tabla = clientes.objects.all()
+				template = 'crudcliente.html'
+			elif nombretabla == 'productos':
+				tabla = productos.objects.all()
+				template = 'crudproducto.html'
+			elif nombretabla == 'sedes':
+				tabla = sedes.objects.all()
+				template = 'crudsede.html'
+			elif nombretabla == 'compras':
+				tabla = compras.objects.all()
+				template = 'crudcompra.html'			
+			elif nombretabla == 'log':
+				tabla = log.objects.all()
+				template = 'crudlog.html'
+		except clientes.DoesNotExist:
+			raise
+		except productos.DoesNotExist:
+			raise
+		except sedes.DoesNotExist:
+			raise
+		except compras.DoesNotExist:
+			raise
+		except log.DoesNotExist:
+			raise
 	return render(request, template, {'lista': tabla})

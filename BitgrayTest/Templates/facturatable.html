@@ -2,13 +2,45 @@
 <html>
 <head>
 	<title>Bitgray Test</title>
+	<style type="text/css">
+		table, th, td {
+		    border: 1px solid black;
+		    border-collapse: collapse;
+		}
+		th, td {
+		    padding: 5px;
+		    text-align: left;    
+		}
+	</style>
 </head>
 <body>
-<table>
-	<tr>
-		<td>
-		</td>
-	</tr>
-</table>
+	<table style="width:100%">
+	  	<tr>
+	    	<th colspan="2">Documento: {{compras_list.1.id_cliente.documento}}</th>
+	    	<th colspan="2">Nombres: {{compras_list.1}}</th>
+	  	</tr>
+	  	<tr>
+	    	<td>Id productos</td>
+	    	<td>Productos <br/>	producto</td>
+	    	<td>Sede</td>
+	    	<td>Precio</td>
+	  	</tr>
+	  	{% for item in compras_list %}
+			<tr>
+		    	<td>{{item.id_producto.id}}</td>
+		    	<td>{{item.id_producto.producto}}</td>
+		    	<td>{{item.id_sede.sede}}</td>
+		    	{% if item.precio == None or item.precio = 0 %}
+		    		<td>{{item.id_producto.precio}}</td>
+		    	{% else %}
+		    		<td>{{item.precio}}</td>
+		    	{% endif %}
+		  	</tr>
+		{% endfor %}
+	  	<tr>
+	    	<td colspan="3">TOTAL PRECIO</td>
+	    	<td><span id='total'>{{sumtotal}}</span></td>
+	  	</tr>
+	</table>
 </body>
 </html>

@@ -7,6 +7,7 @@ from Principal.views import crudselect_view
 from Cliente.views import cliente_create
 from Cliente.views import cliente_update
 from Cliente.views import cliente_delete
+from Cliente.views import facturacliente_view
 from Producto.views import producto_create
 from Producto.views import producto_update
 from Producto.views import producto_delete
@@ -46,5 +47,7 @@ urlpatterns = [
     # Interfaz compras punto 4
     url(r'^compras/$', compras_interfaz, name='comprasinterfaz'),
     url(r'^precioproducto/(?P<key>\d+)/$', precioproducto, name='precioproducto'),
+    # Consulta compras por cliente 5
+    url(r'^facturacliente/$', facturacliente_view, name='facturacliente'),
 
 ]

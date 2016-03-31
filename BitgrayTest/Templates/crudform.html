@@ -10,6 +10,13 @@
 <body>
 	<form method="post">{% csrf_token %}
 		{{ form.as_p }}
+	<p>
+		{% if messages %} 
+	        {% for message in messages %}
+	            <span id="{{message.tags}}">{{ message }}</span>
+	        {% endfor %} 
+	    {% endif %}
+	</p>	
 	<input type="submit" value="Submit" />
 	</form>
 

@@ -12,6 +12,7 @@ from .models import compras
 
 
 class compra_form(ModelForm):
+	"""Form used for CRUD"""
 	class Meta:
 		model = compras
 		fields = ['id_cliente', 'id_producto', 'id_sede', 'precio', 'descripcion', 'fecha']
@@ -42,36 +43,6 @@ def compra_delete(request, pk):
 	return render(request, 'crudconfirmdelete.html', {'object':row})
 
 
-class compra_interfaz_form(forms.Form):
-	"""Formulario para la interfaz de compra punto 4"""
-	OPT_PRODUCTOS = [('{0}-{1}'.format(opt.id, opt.precio), opt.producto) for opt in productos.objects.all()]	
-	def __init__(self, *args, **kwargs):
-		initial = kwargs.get('initial', {})
-		initial['precio'] = productos.objects.first().precio
-		kwargs['initial'] = initial
-
-		super(compra_interfaz_form, self).__init__(*args, **kwargs)
-
-		self.fields['cliente'].widget.attrs = {
-			'required' : True
-		}
-
-		self.fields['producto'].widget.attrs = {
-			'id' : 'productoint',
-			'required' : True,
-			'onchange' : 'obtenerValor()',
-		}
-		
-	cliente = forms.ModelChoiceField(queryset=clientes.objects.all(), label='Cliente', )
-	producto = forms.ChoiceField(choices=OPT_PRODUCTOS, label='Producto', )
-	sede = forms.ModelChoiceField(queryset=sedes.objects.all(), label='Sede', )
-	precio = forms.IntegerField(widget=forms.TextInput(), label='Precio', )
-	descripcion = forms.CharField(widget=forms.Textarea(), label='Descripcion', )
-	fecha = forms.DateField(widget=forms.SelectDateWidget(), label='Fecha',)
-
-	class Meta:
-		model = compras
-		
 class compra_interfaz(ModelForm):
 	"""Formulario para la interfaz de compra punto 4"""
 	def __init__(self, *args, **kwargs):
@@ -122,9 +93,18 @@ def compras_interfaz(request):
 def precioproducto(request, key):
 	if request.method == 'GET':
 		precio_producto = productos.objects.get(id=key).precio
-		print precio_producto
 		response_data ={}
 		response_data['precio'] = precio_producto
 
 	return JsonResponse(response_data)
 
+
+class compra_form(ModelForm):
+	"""Form returning the buyed products of an client document"""
+	class Meta:
+		model = compras
+		fields = ['id_cliente', 'id_producto', 'id_sede', 'precio', 'descripcion', 'fecha']
+		widgets = {
+			'fecha' : forms.SelectDateWidget(),
+		}
+		
