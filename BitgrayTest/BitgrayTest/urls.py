@@ -26,7 +26,7 @@ from Log.views import log_delete
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
-    # CRUD de tablas punto 1
+    # CRUD de tablas punto 2
     url(r'^crudmenu/$', crudmenu_view, name='crudmenu'),
     url(r'^crudmenu/(?P<nombretabla>[\w|\W]+)/$', crudselect_view, name='crudselect'),
     url(r'^crudclientecreate/$', cliente_create, name='crudclientecreate'),
@@ -44,6 +44,18 @@ urlpatterns = [
     url(r'^crudlogcreate/$', log_create, name='crudlogcreate'),
     url(r'^crudlogupdate/(?P<pk>\d+)/$', log_update, name='crudlogupdate'),
     url(r'^crudlogdelete/(?P<pk>\d+)/$', log_delete, name='crudlogdelete'),
+    # API para consulta/creacion
+    url(r'^apitest/$', TemplateView.as_view(template_name='APItestventana.html')),
+    url(r'^apicliente/$', 'Cliente.views.cliente_collection', name='cliente_collection'),
+    url(r'^apicliente/(?P<pk>\d+)/$', 'Cliente.views.cliente_element', name='cliente_element'),
+    url(r'^apiproducto/$', 'Producto.views.producto_collection', name='producto_collection'),
+    url(r'^apiproducto/(?P<pk>\d+)/$', 'Producto.views.producto_element', name='producto_element'),
+    url(r'^apisede/$', 'Sede.views.sede_collection', name='sede_collection'),
+    url(r'^apisede/(?P<pk>\d+)/$', 'Sede.views.sede_element', name='sede_element'),
+    url(r'^apicompra/$', 'Compra.views.compra_collection', name='compra_collection'),
+    url(r'^apicompra/(?P<pk>\d+)/$', 'Compra.views.compra_element', name='compra_element'),
+    url(r'^apilog/$', 'Log.views.log_collection', name='log_collection'),
+    url(r'^apilog/(?P<pk>\d+)/$', 'Log.views.log_element', name='log_element'),
     # Interfaz compras punto 4
     url(r'^compras/$', compras_interfaz, name='comprasinterfaz'),
     url(r'^precioproducto/(?P<key>\d+)/$', precioproducto, name='precioproducto'),

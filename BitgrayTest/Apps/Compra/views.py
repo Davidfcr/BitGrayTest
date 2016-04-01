@@ -9,6 +9,10 @@ from Cliente.models import clientes
 from Producto.models import productos
 from Sede.models import sedes
 from .models import compras
+from Principal.serializers import CompraSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 
 class compra_form(ModelForm):
@@ -107,4 +111,32 @@ class compra_form(ModelForm):
 		widgets = {
 			'fecha' : forms.SelectDateWidget(),
 		}
-		
+
+
+@api_view(['GET', 'POST'])
+def compra_collection(request):
+	""" API to list or create compras """
+	if request.method == 'GET':
+		compras_list = compras.objects.all()
+		serializer = CompraSerializer(compras_list, many=True)
+		return Response(serializer.data)
+	elif request.method == 'POST':
+		serializer = CompraSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def compra_element(request, pk):
+	""" API to list a sinlge compras """
+	try:
+		compras_list = compras.objects.get(id=pk)
+	except compras.DoesNotExist:
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	if request.method == 'GET':
+		serializer = CompraSerializer(compras_list)
+		return Response(serializer.data)

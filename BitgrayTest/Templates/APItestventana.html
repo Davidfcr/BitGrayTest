@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BitGray Test</title>
+</head>
+<body>
+	<section>
+		<div>
+			<h1>API Clientes</h1>
+			<ul>
+				<li>
+					<p>Consultar coleccion</p>
+					<form action="{% url 'cliente_collection' %}" method="get">
+					    <input type="submit" value="Consultar" />
+					</form>
+				</li>
+				<li>
+					<p>Crear elemento</p>
+					<form action="{% url 'cliente_collection' %}" method="post">
+					    <input type="documento" min="0" name="documento" placeholder="documento"/>
+					    <input type="nombres" name="nombres" placeholder="nombres" />
+					    <textarea name="detalles" cols="40" rows="10" placeholder="detalles"></textarea>
+					    <input type="submit" value="Agregar" />
+					</form>
+				</li>
+				<li>
+					<p>Consultar elemento</p>
+					<form action="{% url 'cliente_collection' %}" method="get">
+					    <input id='pkcliente' type="text" name="id" placeholder="id" onchange="pkcliente()" />
+					    <a id="linktest" href="">Consultar</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			function pkcliente(){
+				idvalue = document.getElementById('pkcliente').value;
+				if (idvalue != ""){
+					a = document.getElementById('linktest');
+					a.href = 'http://localhost:8000/apicliente/'+idvalue+'/';	
+				}	
+			}
+		</script>
+	</section>
+	<section>
+		<div>
+			<h1>API Productos</h1>
+			<ul>
+				<li>
+					<p>Consultar coleccion</p>
+					<form action="{% url 'producto_collection' %}" method="get">
+					    <input type="submit" value="Consultar" />
+					</form>
+				</li>
+				<li>
+					<p>Crear elemento</p>
+					<form action="{% url 'producto_collection' %}" method="post">
+					    <input type="text" name="producto" placeholder="producto" />
+					    <input type="number" min="0" name="precio" placeholder="precio"/>
+					    <textarea name="descripcion" cols="40" rows="10" placeholder="descripcion"></textarea>
+					    <input type="submit" value="Agregar" />
+					</form>
+				</li>
+				<li>
+					<p>Consultar elemento</p>
+					<form action="{% url 'producto_collection' %}" method="get">
+					    <input id='pkproducto' type="text" name="id" placeholder="id" onchange="pkproducto()" />
+					    <a id="linktest" href="">Consultar</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			function pkproducto(){
+				idvalue = document.getElementById('pkproducto').value;
+				if (idvalue != ""){
+					a = document.getElementById('linktest');
+					a.href = 'http://localhost:8000/apiproducto/'+idvalue+'/';	
+				}	
+			}
+		</script>
+	</section>
+	<section>
+		<div>
+			<h1>API Sedes</h1>
+			<ul>
+				<li>
+					<p>Consultar coleccion</p>
+					<form action="{% url 'sede_collection' %}" method="get">
+					    <input type="submit" value="Consultar" />
+					</form>
+				</li>
+				<li>
+					<p>Crear elemento</p>
+					<form action="{% url 'sede_collection' %}" method="post">
+					    <input type="text" name="sede" placeholder="sede" />
+					    <input type="text" name="direccion" placeholder="direccion" />
+					    <input type="submit" value="Agregar" />
+					</form>
+				</li>
+				<li>
+					<p>Consultar elemento</p>
+					<form action="{% url 'sede_collection' %}" method="get">
+					    <input id='pksede' type="text" name="id" placeholder="id" onchange="pksede()" />
+					    <a id="linktest" href="">Consultar</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			function pksede(){
+				idvalue = document.getElementById('pksede').value;
+				if (idvalue != ""){
+					a = document.getElementById('linktest');
+					a.href = 'http://localhost:8000/apisede/'+idvalue+'/';	
+				}	
+			}
+		</script>
+	</section>
+	<section>
+		<div>
+			<h1>API Compras</h1>
+			<ul>
+				<li>
+					<p>Consultar coleccion</p>
+					<form action="{% url 'compra_collection' %}" method="get">
+					    <input type="submit" value="Consultar" />
+					</form>
+				</li>
+				<li>
+					<p>Crear elemento</p>
+					<form action="{% url 'compra_collection' %}" method="post">
+					    <input type="text" name="producto" placeholder="producto" />
+					    <input type="number" min="0" name="precio" placeholder="precio"/>
+					    <textarea name="descripcion" cols="40" rows="10" placeholder="descripcion"></textarea>
+					    <input type="submit" value="Agregar" />
+					</form>
+				</li>
+				<li>
+					<p>Consultar elemento</p>
+					<form action="{% url 'compra_collection' %}" method="get">
+					    <input id='pkcompra' type="text" name="id" placeholder="id" onchange="pkcompra()" />
+					    <a id="linktest" href="">Consultar</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			function pkcompra(){
+				idvalue = document.getElementById('pkcompra').value;
+				if (idvalue != ""){
+					a = document.getElementById('linktest');
+					a.href = 'http://localhost:8000/apicompra/'+idvalue+'/';	
+				}	
+			}
+		</script>
+	</section>
+	<section>
+		<div>
+			<h1>API Logs</h1>
+			<ul>
+				<li>
+					<p>Consultar coleccion</p>
+					<form action="{% url 'log_collection' %}" method="get">
+					    <input type="submit" value="Consultar" />
+					</form>
+				</li>
+				<li>
+					<p>Crear elemento</p>
+					<form action="{% url 'log_collection' %}" method="post">
+					    <input type="text" name="fecha" placeholder="fecha" />
+					    <textarea name="descripcion" cols="40" rows="10" placeholder="descripcion"></textarea>
+					    <input type="submit" value="Agregar" />
+					</form>
+				</li>
+				<li>
+					<p>Consultar elemento</p>
+					<form action="{% url 'log_collection' %}" method="get">
+					    <input id='pklog' type="text" name="id" placeholder="id" onchange="pklog()" />
+					    <a id="linktest" href="">Consultar</a>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			function pklog(){
+				idvalue = document.getElementById('pklog').value;
+				if (idvalue != ""){
+					a = document.getElementById('linktest');
+					a.href = 'http://localhost:8000/apilog/'+idvalue+'/';	
+				}	
+			}
+		</script>
+	</section>
+</body>
+</html>

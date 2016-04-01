@@ -5,7 +5,10 @@ from django.contrib import messages
 from django.forms import ModelForm
 from .models import clientes
 from Compra.models import compras
-
+from Principal.serializers import ClienteSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 class cliente_form(ModelForm):
 	"""Form used for CRUD"""
@@ -79,3 +82,32 @@ def facturacliente_view(request):
 		else:
 			form = facturacliente_form
 	return render(request, 'crudform.html', {'form': form})
+
+
+@api_view(['GET', 'POST'])
+def cliente_collection(request):
+	""" API to list or create clients """
+	if request.method == 'GET':
+		clientes_list = clientes.objects.all()
+		serializer = ClienteSerializer(clientes_list, many=True)
+		return Response(serializer.data)
+	elif request.method == 'POST':
+		serializer = ClienteSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def cliente_element(request, pk):
+	""" API to list a sinlge client """
+	try:
+		clientes_list = clientes.objects.get(id=pk)
+	except clientes.DoesNotExist:
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	if request.method == 'GET':
+		serializer = ClienteSerializer(clientes_list)
+		return Response(serializer.data)
