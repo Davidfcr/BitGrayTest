@@ -135,7 +135,41 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': {
+        'filter': {
+            '()': 'Log.logger.LogFilter',
+            'select': 'SELECT',
+            'update': 'UPDATE',
+            'delete': 'DELETE',
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'verbose': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers':{
+        'db':{
+            'level': 'DEBUG', 
+            'class': 'Log.logger.LogDbHandler', 
+            'formatter': 'simple',
+            'filters': ['filter'],
+        }
+    ,},
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['db'],   
+            'propagate': False,
+        },
+    }
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
