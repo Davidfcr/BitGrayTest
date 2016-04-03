@@ -139,11 +139,8 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'filters': {
-        'filter': {
+        'dbfilter': {
             '()': 'Log.logger.LogFilter',
-            'select': 'SELECT',
-            'update': 'UPDATE',
-            'delete': 'DELETE',
         }
     },
     'formatters': {
@@ -151,21 +148,21 @@ LOGGING = {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
         'simple': {
-            'verbose': '%(levelname)s %(message)s'
+            'format': '%(levelname)s %(message)s'
         },
     },
     'handlers':{
-        'db':{
-            'level': 'DEBUG', 
-            'class': 'Log.logger.LogDbHandler', 
-            'formatter': 'simple',
-            'filters': ['filter'],
+        'dbhandler':{
+            'level': 'DEBUG',
+            'filters': ['dbfilter'], 
+            'class': 'Log.logger.LogDbHandler',
+            'formatter': 'verbose',
         }
     ,},
     'loggers': {
         'django.db.backends': {
             'level': 'DEBUG',
-            'handlers': ['db'],   
+            'handlers': ['dbhandler'],   
             'propagate': False,
         },
     }
