@@ -1,14 +1,23 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.forms import ModelForm
+from django.template import Context
+from django.template.loader import get_template
 from .models import clientes
 from Compra.models import compras
 from Principal.serializers import ClienteSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+import cStringIO as StringIO
+from xhtml2pdf import pisa
+import json
+from cgi import escape
 
 class cliente_form(ModelForm):
 	"""Form used for CRUD"""
@@ -82,6 +91,30 @@ def facturacliente_view(request):
 		else:
 			form = facturacliente_form
 	return render(request, 'crudform.html', {'form': form})
+
+@csrf_exempt
+def facturapdf_view(request):
+	if request.method=='POST':
+		try:
+			data = json.loads(request.body.decode('utf-8'))
+			render_to_pdf({'pagesize':'A4', 'lista': data})
+		except Exception, e:
+			str(e)
+
+		return
+
+def render_to_pdf(jsondata):
+    try:
+    	template = get_template('pdf.html')
+    	context = Context(jsondata)
+    	html = template.render(context)	
+    	result = StringIO.StringIO()
+    	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    	if not pdf.err:
+    		return HttpResponse(result.getvalue(), content_type='application/pdf')
+    	return HttpResponse('Errores<pre>%s</pre>' % escape(html))
+    except Exception, e:
+    	raise str(e)
 
 
 @api_view(['GET', 'POST'])

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Bitgray Test</title>
+        <style type="text/css">
+            @page {
+                size: {{ pagesize }};
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+			table, th, td {
+			    border: 1px solid black;
+			    border-collapse: collapse;
+			}
+			th, td {
+			    padding: 5px;
+			    text-align: left;    
+			}
+		</style>
+	</head>
+	<body>
+		<table style="width:100%">
+		  	<tr>
+		    	<th colspan="2">Documento: <span id="documento">{{lista.documento}}</span></th>
+		    	<th colspan="2">Nombres: <span id="nombre">{{lista.nombre}}</span></th>
+		  	</tr>
+		  	<tr>
+		    	<td>Id productos</td>
+		    	<td>Productos <br/>	producto</td>
+		    	<td>Sede</td>
+		    	<td>Precio</td>
+		  	</tr>
+		  	{% for dato in lista.item %}
+				<tr class="items">
+			    	<td class="id">{{dato.id}}</td>
+			    	<td class="desc">{{dato.descripcion}}</td>
+			    	<td class="sedes">{{dato.sede}}</td>
+			    	<td class="precios">{{dato.precio}}</td>
+			  	</tr>
+			{% endfor %}
+		  	<tr>
+		    	<td colspan="3">TOTAL PRECIO</td>
+		    	<td><div id='total'>{{lista.total}}</div></td>
+		  	</tr>
+		</table>
+    </body>
+</html>

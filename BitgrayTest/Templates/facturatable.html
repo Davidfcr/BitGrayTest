@@ -16,8 +16,8 @@
 <body>
 	<table style="width:100%">
 	  	<tr>
-	    	<th colspan="2">Documento: {{compras_list.1.id_cliente.documento}}</th>
-	    	<th colspan="2">Nombres: {{compras_list.1}}</th>
+	    	<th colspan="2">Documento: <span id="documento">{{compras_list.1.id_cliente.documento}}</span></th>
+	    	<th colspan="2">Nombres: <span id="nombre">{{compras_list.1}}</span></th>
 	  	</tr>
 	  	<tr>
 	    	<td>Id productos</td>
@@ -26,21 +26,62 @@
 	    	<td>Precio</td>
 	  	</tr>
 	  	{% for item in compras_list %}
-			<tr>
-		    	<td>{{item.id_producto.id}}</td>
-		    	<td>{{item.id_producto.producto}}</td>
-		    	<td>{{item.id_sede.sede}}</td>
+			<tr class="items">
+		    	<td class="id">{{item.id_producto.id}}</td>
+		    	<td class="desc">{{item.id_producto.producto}}</td>
+		    	<td class="sedes">{{item.id_sede.sede}}</td>
 		    	{% if item.precio == None or item.precio = 0 %}
-		    		<td>{{item.id_producto.precio}}</td>
+		    		<td class="precios">{{item.id_producto.precio}}</td>
 		    	{% else %}
-		    		<td>{{item.precio}}</td>
+		    		<td class="precios">{{item.precio}}</td>
 		    	{% endif %}
 		  	</tr>
 		{% endfor %}
 	  	<tr>
 	    	<td colspan="3">TOTAL PRECIO</td>
-	    	<td><span id='total'>{{sumtotal}}</span></td>
+	    	<td><div id='total'>{{sumtotal}}</div></td>
 	  	</tr>
 	</table>
+	<br/>
+	<button id="botonpdf" onclick="">Exportar a PDF</button>
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('#botonpdf').click(function(){
+		    	var items = []
+		    	$("tr[class=items]").each(function() {
+			        var id = $(this).children('.id').text();
+			        var desc = $(this).children('.desc').text();
+			        var sedes = $(this).children('.sedes').text();
+			        var precios = $(this).children('.precios').text();
+
+			        item = {}
+			        item ["id"] = id;
+			        item ["descripcion"] = desc;
+			        item ["sede"] = sedes;
+			        item ["precio"] = precios;
+
+			        items.push(item);
+			    });
+		    	var data = new Object();
+		    	data.documento = $('#documento').text();
+		    	data.nombre = $('#nombre').text();
+		    	data.item = items;
+		    	data.total = $('#total').text();
+              	var json_obj = JSON.stringify(data);
+	        	$.ajax({
+	        		url: '/facturacliente/pdf',
+				    type: 'POST',
+				    contentType: 'application/json; charset=utf-8',
+				    data: json_obj,
+				    processData: false,
+		            success: function(result) {
+					    var url = result['url'];
+					    window.location = url;
+		            },
+	        	});
+		    });
+		});
+	</script>
 </body>
 </html>
