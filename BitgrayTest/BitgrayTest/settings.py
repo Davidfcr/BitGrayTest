@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Principal.context_processors.weekly_report',
             ],
         },
     },
@@ -121,7 +122,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bitgraytest@gmail.com'
+EMAIL_HOST_PASSWORD = 'bitgraytest1'
+DEFAULT_FROM_EMAIL = 'bitgraytest@gmail.com'
+DEFAULT_TO_EMAIL = 'bitgraytest@gmail.com'
 
+TASK_ENVIAR = True
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
