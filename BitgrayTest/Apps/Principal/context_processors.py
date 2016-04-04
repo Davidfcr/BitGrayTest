@@ -63,11 +63,11 @@ def reporte_msg():
 	compras_list_f = compras.objects.first()
 	compras_list_l = compras.objects.latest('id')
 	diff = compras_list_f.fecha - compras_list_l.fecha
-	compraporminuto = abs(diff.total_seconds() / 60) / compras_list
+	compraporminuto = int(abs(diff.total_seconds() / 60) / compras_list)
 
 	html_contenido = ('<b>Diferencia promedio</b>: 'u'{0} <br/> <b>máxima</b>: 'u'{1} <br/> <b>mínima</b>: 'u'{2} <br/>').format(diferenciaprom, maxprecio, minprecio)
 	html_contenido += ('<b>Numero de compras</b>: 'u'{0} <br/>').format(compras_list)
 	html_contenido += ('<b>Total ganancias</b>: 'u'{0} <br/>').format(totalcompras)
-	html_contenido += ('<b>Compras promedio por minuto</b>: 1 compra cada 'u'{0} <br/>').format(compraporminuto)
+	html_contenido += ('<b>Compras promedio por minuto</b>: 1 compra cada 'u'{0} minuto(s) <br/>').format(compraporminuto)
 	return html_contenido
 
