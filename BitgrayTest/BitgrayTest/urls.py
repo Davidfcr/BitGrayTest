@@ -26,7 +26,7 @@ from Log.views import log_delete
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
     # CRUD de tablas punto 2
     url(r'^crudmenu/$', crudmenu_view, name='crudmenu'),
     url(r'^crudmenu/(?P<nombretabla>[\w|\W]+)/$', crudselect_view, name='crudselect'),
@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^crudlogupdate/(?P<pk>\d+)/$', log_update, name='crudlogupdate'),
     url(r'^crudlogdelete/(?P<pk>\d+)/$', log_delete, name='crudlogdelete'),
     # API para consulta/creacion
-    url(r'^apitest/$', TemplateView.as_view(template_name='APItestventana.html')),
+    url(r'^apitest/$', TemplateView.as_view(template_name='APItestventana.html'), name='apitest'),
     url(r'^apicliente/$', 'Cliente.views.cliente_collection', name='cliente_collection'),
     url(r'^apicliente/(?P<pk>\d+)/$', 'Cliente.views.cliente_element', name='cliente_element'),
     url(r'^apiproducto/$', 'Producto.views.producto_collection', name='producto_collection'),

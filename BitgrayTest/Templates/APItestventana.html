@@ -26,18 +26,18 @@
 				<li>
 					<p>Consultar elemento</p>
 					<form action="{% url 'cliente_collection' %}" method="get">
-					    <input id='pkcliente' type="text" name="id" placeholder="id" onchange="pkcliente()" />
-					    <a id="linktest" href="">Consultar</a>
+					    <input id='idcliente' type="text" name="id" placeholder="id" onchange="pkcliente()" />
+					    <a id="linkcliente" href="">Consultar</a>
 					</form>
 				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
 			function pkcliente(){
-				idvalue = document.getElementById('pkcliente').value;
+				idvalue = document.getElementById('idcliente').value;
 				if (idvalue != ""){
-					a = document.getElementById('linktest');
-					a.href = 'http://localhost:8000/apicliente/'+idvalue+'/';	
+					a = document.getElementById('linkcliente');
+					a.href = '/apicliente/'+idvalue+'/';	
 				}	
 			}
 		</script>
@@ -64,18 +64,18 @@
 				<li>
 					<p>Consultar elemento</p>
 					<form action="{% url 'producto_collection' %}" method="get">
-					    <input id='pkproducto' type="text" name="id" placeholder="id" onchange="pkproducto()" />
-					    <a id="linktest" href="">Consultar</a>
+					    <input id='idproducto' type="text" name="id" placeholder="id" onchange="pkproducto()" />
+					    <a id="linkproducto" href="">Consultar</a>
 					</form>
 				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
 			function pkproducto(){
-				idvalue = document.getElementById('pkproducto').value;
+				idvalue = document.getElementById('idproducto').value;
 				if (idvalue != ""){
-					a = document.getElementById('linktest');
-					a.href = 'http://localhost:8000/apiproducto/'+idvalue+'/';	
+					a = document.getElementById('linkproducto');
+					a.href = '/apiproducto/'+idvalue+'/';	
 				}	
 			}
 		</script>
@@ -101,18 +101,18 @@
 				<li>
 					<p>Consultar elemento</p>
 					<form action="{% url 'sede_collection' %}" method="get">
-					    <input id='pksede' type="text" name="id" placeholder="id" onchange="pksede()" />
-					    <a id="linktest" href="">Consultar</a>
+					    <input id='idsede' type="text" name="id" placeholder="id" onchange="pksede()" />
+					    <a id="linksede" href="">Consultar</a>
 					</form>
 				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
 			function pksede(){
-				idvalue = document.getElementById('pksede').value;
+				idvalue = document.getElementById('idsede').value;
 				if (idvalue != ""){
-					a = document.getElementById('linktest');
-					a.href = 'http://localhost:8000/apisede/'+idvalue+'/';	
+					a = document.getElementById('linksede');
+					a.href = '/apisede/'+idvalue+'/';	
 				}	
 			}
 		</script>
@@ -139,18 +139,18 @@
 				<li>
 					<p>Consultar elemento</p>
 					<form action="{% url 'compra_collection' %}" method="get">
-					    <input id='pkcompra' type="text" name="id" placeholder="id" onchange="pkcompra()" />
-					    <a id="linktest" href="">Consultar</a>
+					    <input id='idcompra' type="text" name="id" placeholder="id" onchange="pkcompra()" />
+					    <a id="linkcompra" href="">Consultar</a>
 					</form>
 				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
 			function pkcompra(){
-				idvalue = document.getElementById('pkcompra').value;
+				idvalue = document.getElementById('idcompra').value;
 				if (idvalue != ""){
-					a = document.getElementById('linktest');
-					a.href = 'http://localhost:8000/apicompra/'+idvalue+'/';	
+					a = document.getElementById('linkcompra');
+					a.href = '/apicompra/'+idvalue+'/';	
 				}	
 			}
 		</script>
@@ -176,18 +176,18 @@
 				<li>
 					<p>Consultar elemento</p>
 					<form action="{% url 'log_collection' %}" method="get">
-					    <input id='pklog' type="text" name="id" placeholder="id" onchange="pklog()" />
-					    <a id="linktest" href="">Consultar</a>
+					    <input id='idlog' type="text" name="id" placeholder="id" onchange="pklog()" />
+					    <a id="linklog" href="">Consultar</a>
 					</form>
 				</li>
 			</ul>
 		</div>
 		<script type="text/javascript">
 			function pklog(){
-				idvalue = document.getElementById('pklog').value;
+				idvalue = document.getElementById('idlog').value;
 				if (idvalue != ""){
-					a = document.getElementById('linktest');
-					a.href = 'http://localhost:8000/apilog/'+idvalue+'/';	
+					a = document.getElementById('linklog');
+					a.href = '/apilog/'+idvalue+'/';	
 				}	
 			}
 		</script>

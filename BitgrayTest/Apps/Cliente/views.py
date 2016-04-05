@@ -12,7 +12,6 @@ from Principal.serializers import ClienteSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 import cStringIO as StringIO
 from xhtml2pdf import pisa
@@ -79,10 +78,14 @@ def facturacliente_view(request):
 			except compras.MultipleObjectsReturned:
 				compras_list = compras.objects.filter(id_cliente=cliente_list.id)
 				for item in compras_list:
-					if item.precio is None: 
-						sumtotal += item.id_producto.precio
+					if item.precio is None:
+						if item.id_producto is not None:
+							if item.id_producto.precio is not None:
+						 		sumtotal += item.id_producto.precio
 					elif item.precio == 0:
-						sumtotal += item.id_producto.precio
+						if item.id_producto is not None:
+							if item.id_producto.precio is not None:
+							 	sumtotal += item.id_producto.precio
 					else:
 						sumtotal += item.precio
 				return render(request, 'facturatable.html', {'compras_list': compras_list, 'sumtotal': sumtotal})
@@ -111,7 +114,7 @@ def render_to_pdf(jsondata):
     	result = StringIO.StringIO()
     	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
     	if not pdf.err:
-    		return HttpResponse(result.getvalue(), content_type='application/pdf')
+    		return HttpResponse(result, content_type='application/pdf')
     	return HttpResponse('Errores<pre>%s</pre>' % escape(html))
     except Exception, e:
     	raise str(e)
@@ -137,10 +140,11 @@ def cliente_collection(request):
 def cliente_element(request, pk):
 	""" API to list a sinlge client """
 	try:
-		clientes_list = clientes.objects.get(id=pk)
+		if request.method == 'GET':
+			clientes_list = clientes.objects.get(id=pk)
+			serializer = ClienteSerializer(clientes_list)
+			return Response(serializer.data)
 	except clientes.DoesNotExist:
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+		return Response('No se encuentra cliente', status=status.HTTP_400_BAD_REQUEST)
 
-	if request.method == 'GET':
-		serializer = ClienteSerializer(clientes_list)
-		return Response(serializer.data)
+	

@@ -5,6 +5,7 @@
 	<title>{% block title %}Bitgray Test{% endblock %}</title>
 </head>
 <body>
+	<a href="{% url 'home' %}">INICIO</a>
 	<section>
 		<nav>
 			<ul>
@@ -12,7 +13,7 @@
 					<a href="{% url 'crudmenu' %}">CRUD</a>
 				</ol>
 				<ol>
-					<a href="">API de transacciones</a>
+					<a href="{% url 'apitest' %}">API de transacciones</a>
 				</ol>
 				<ol>
 					<a href="{% url 'comprasinterfaz' %}">Interfaz de compras</a>
